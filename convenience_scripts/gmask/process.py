@@ -33,12 +33,7 @@ def main():
                 rkey -= reds
                 gkey -= greens
                 bkey -= blues
-                rkey = numpy.square(rkey)
-                gkey = numpy.square(gkey)
-                bkey = numpy.square(bkey)
-                square_distance = rkey + bkey + gkey
-                
-                mask = numpy.sqrt(square_distance) < int(sensitivity) #| (numpy.amax(rgb, axis=2) != greens)
+                mask = (abs(rkey) + abs(gkey) + abs(bkey)) < int(sensitivity) #| (numpy.amax(rgb, axis=2) != greens)
                 result = numpy.where(mask, 255, 0)
                 if not os.path.exists("masks"):
                     os.mkdir("masks")
