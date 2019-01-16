@@ -50,7 +50,7 @@ def main():
                 Cb_key = numpy.ones_like(Cb_p)*int(key_pixel_YCrCb[0,0][1])
                 Cr_key = numpy.ones_like(Cr_p)*int(key_pixel_YCrCb[0,0][2])
 
-                eucDis = numpy.sqrt((Cr_p - Cr_key.astype(float))**2 + (Cb_p.astype(float) - Cr_key.astype(float))**2)
+                eucDis = numpy.sqrt((Cr_p - Cr_key.astype(float))**2 + (Cb_p - Cr_key.astype(float))**2)
                 mask = eucDis.astype(int) < int(sensitivity)
                 result = numpy.where(mask, 255, 0)
 
