@@ -27,7 +27,7 @@ def main():
                 # RGB to YCrCb colorspace
                 key_pixelRGB = numpy.zeros((1,1,3), numpy.uint8)
                 key_pixelRGB[0,0] = key
-                key_pixel_YCrCb = cv2.cvtColor(key_pixelRGB, cv2.COLOR_RGB2YCR_CB)
+                key_pixel_YCrCb = cv2.cvtColor(key_pixelRGB, cv2.COLOR_BGR2YCR_CB)
 
                 # export the RAW file to tiff format in its own subdirectory
                 # if the target directory does not exist, create one
