@@ -32,11 +32,20 @@ def main():
                 destRGB = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
                 cv2.imwrite(os.path.join(directory + "/tiffs", filename + ".tiff"), destRGB)
 
+                # convert BGA data to YCrCb, this is a little confusing because although rgb contain
                 destCR_CB = cv2.cvtColor(rgb, cv2.COLOR_BGR2YCR_CB)
+
+                # only one sensitivity parameter for now
+                # TODO: use a dual sensitivity (one for each channel, Cr vs. euclidean distance and Cb vs euclidean distance)
                 sensitivity = sys.argv[1]
                 empty_img = numpy.zeros_like(rgb)
-                Cb_p = destCR_CB[:, :, 1]
-                Cr_p = destCR_CB[:, :, 2]
+
+                # the second page of 3 dimensional array destCR_CB, which contains the Cb data of the image
+                Cr_p = destCR_CB[:, :, 1]
+
+                # the third page of 3 dimensional array destCR_CB, which contains the Cr data of the image
+                Cb_p = destCR_CB[:, :, 2]
+
 
                 Cb_key = numpy.ones_like(Cb_p)*int(key_pixel_YCrCb[0,0][1])
                 Cr_key = numpy.ones_like(Cr_p)*int(key_pixel_YCrCb[0,0][2])
@@ -47,7 +56,7 @@ def main():
 
                 if not os.path.exists("masks"):
                     os.mkdir("masks")
-
+                cv2.imwrite(os.path.join(directory + "/masks", filename + "_YCrCb.tiff"), destCR_CB)
                 cv2.imwrite(os.path.join(directory + "/masks", filename + "_mask.tiff"), result)
                 continue
             else:
