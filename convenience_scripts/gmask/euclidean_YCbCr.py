@@ -59,11 +59,12 @@ def main():
 
                 # create an array of ones and multiply by the key_pixel value
                 # in YCR_CB color space
-                Cb_key = numpy.ones_like(Cb_p) * int(key_pixel_YCrCb[0,0][1])
-                Cr_key = numpy.ones_like(Cr_p) * int(key_pixel_YCrCb[0,0][2])
+
+                Cr_key = numpy.ones_like(Cr_p) * int(key_pixel_YCrCb[0,0][1])
+                Cb_key = numpy.ones_like(Cb_p) * int(key_pixel_YCrCb[0,0][2])
 
                 # calculate the sum of euclidean distances between the the Cr and Cb values respectively
-                eucDis = numpy.sqrt((Cr_p - Cr_key.astype(float)) ** 2 + (Cb_p - Cr_key.astype(float)) ** 2)
+                eucDis = numpy.sqrt((Cr_p - Cr_key.astype(float)) ** 2 + (Cb_p - Cb_key.astype(float)) ** 2)
                 mask = eucDis.astype(int) < int(sensitivity)
                 
                 # result is true if that pixel's euclidean distance is less
