@@ -53,17 +53,17 @@ def main():
 
                 # the second page of 3 dimensional array destCR_CB, which
                 # contains the Cb data of the image
-                Cr_p = destCR_CB[:, :, 1]
+                Cr_p = destCR_CB[:, :, 2]
 
                 # the third page of 3 dimensional array destCR_CB, which
                 # contains the Cr data of the image
-                Cb_p = destCR_CB[:, :, 2]
+                Cb_p = destCR_CB[:, :, 1]
 
                 # create an array of ones and multiply by the key_pixel value
                 # in YCR_CB color space
 
-                Cr_key = numpy.ones_like(Cr_p) * int(key_pixel_YCrCb[0,0][1])
-                Cb_key = numpy.ones_like(Cb_p) * int(key_pixel_YCrCb[0,0][2])
+                Cr_key = numpy.ones_like(Cr_p) * int(key_pixel_YCrCb[0,0][2])
+                Cb_key = numpy.ones_like(Cb_p) * int(key_pixel_YCrCb[0,0][1])
 
                 # calculate the sum of euclidean distances between the the Cr and Cb values respectively
                 eucDis = numpy.sqrt((Cr_p - Cr_key.astype(float)) ** 2 + (Cb_p - Cb_key.astype(float)) ** 2)
@@ -73,7 +73,7 @@ def main():
                 # than the given sensitivity parameter
                 # TODO: allow different sensitivities for Cb and Cr values
                 
-                result = numpy.where(mask, 255, 0)
+                result = numpy.where(mask, 0, 255)
                 if not os.path.exists("ycrcb"):
                     os.mkdir("ycrcb")
                 cv2.imwrite(os.path.join(directory + "/ycrcb", filename + "_ycrcb.tiff"), destCR_CB)
