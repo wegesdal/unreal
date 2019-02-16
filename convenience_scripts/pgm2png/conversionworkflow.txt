@@ -1,0 +1,4 @@
+download landscape mesh as stl
+open in meshlab export as wrl
+convert wrl to height map as pgm
+convert pgm to png

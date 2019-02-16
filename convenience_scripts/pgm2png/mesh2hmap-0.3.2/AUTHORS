@@ -1,0 +1,14 @@
+AUTHORS
+Tim Hessint
+
+THANKS
+
+Ujjwal Rane: Posted a better method for determining if a point is inside 
+a triangle at www.mathforum.org. It uses the sum of the areas of 3 sub 
+triangles instead of cross-products. It was posted here posted at 
+(http://mathforum.org/library/drmath/view/54735.html).
+
+Graeme McRae: I found the algorithm used in versions 0.1 through 0.1.2 for 
+determining if a point is within a triangle using cross products on his 
+website (http://mcraeclan.com/mathhelp/GeometryPointAndTriangle2.htm).
+

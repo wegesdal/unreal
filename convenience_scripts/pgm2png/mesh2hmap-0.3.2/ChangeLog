@@ -1,0 +1,41 @@
+2006-11-04 version 0.3.2
+	- Fixed Makefiles to work with GCC 4.x
+	- Rewrote VRML parser so that it can handle DEF/USE keywords
+
+2006-05-06 version 0.3.1
+	- Fixed bug where you had to specify min, max and bg. They now
+	  take on their default values if not specified.
+	- Quick fix for a numerical error in the heightmap equations where
+	  near vertical polygons could produce very high or low heights.
+	  Each height is now confined within the height range of its
+	  polygon.
+	
+2006-04-19 version 0.3
+	- Can now output colour gradient heightmaps
+	- Added functionality for setting the background
+	- Parser can now parse VRML2 again (broken in 0.2)
+	- Added `-v' and `--version' command line option
+
+2006-04-02 version 0.2
+	- Fixed background problem with non-rectangular heightmaps. Background
+	  is now set equal to minimum value of heightmap
+	- Functionality for printing 'raw' heightmaps
+	- Added autoconf/automake scripts
+	- Split code into 4 files: main, parser, mesh2hmap, and output
+	- Parser for 'native' format now handles 3+ vertices per polygon
+	- Minor changes to MAN page
+	
+2006-03-28 version 0.1.2
+	- Improved VRML parsing algorithm - removed unnecessary nesting
+	- Fixed VRML parser bug - only worked when there was a single space 
+	  between label and '{' or '[' delimiter.
+	- Fixed VRML parser bug - was reading texture coordinates as vertices
+	- Wrote proper groff MAN page - mesh2hmap.1
+	- Fixed 'usage' message and added '-h' and '--help' switches.
+
+2006-03-24 version 0.1.1
+	- First Sourceforge version. Changed some documentation, no 
+	changes to the source code.
+
+2006-02-21 version 0.1
+	- First version

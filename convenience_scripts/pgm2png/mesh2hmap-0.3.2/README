@@ -1,0 +1,30 @@
+If you download this software please let me know (see 'SUPPORT') if:
+	1) It actually compiled on your machine
+	2) It works with your VRMLs
+
+Installation is via the usual './configure && make && make install'.
+Further instructions can be found in 'INSTALL'. For instructions on 
+how to run this program, see the manual:
+
+	man ./man/mesh2hmap.1
+
+This program was designed for creating heightmaps from meshes for the
+'Tribes' inspired game 'Legends'. Legends uses a 256x256 PNG image as
+a heightmap for the terrain. I wanted to make some particular terrain
+geometry in a 3D modeller and convert it to a heightmap. 
+
+The program converts a 3D mesh into a 2D heightmap. The mesh is in the
+form of vertices and polygons, which are defined by indeces to the
+vertices. Currently this program can parse the mesh from a VRML file
+or a plain text file using a 'native' file format. VRML is a
+widespread format and most 3D formats can be converted to it.
+
+The code is extremely messy, largely undocumented and hard to
+understand. Unless you're familiar with C and pointer arithmetic,
+don't even try to understand it. This program should be split into
+three files: Main; Mesh Parsing; and Heightmap Generation. 
+
+I think this would make a useful Blender export script. If anyone
+would like to do this, let me know, and I'll document what the
+algorithm is doing in English (see 'SUPPORT').
+

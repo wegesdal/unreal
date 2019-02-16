@@ -1,0 +1,178 @@
+.\" mesh2hmap man page
+.\" Copyright Tim Hessint, 2006
+.\" --------------------------------------------------
+.\" TITLE
+.\" --------------------------------------------------
+.TH MESH2HMAP 1 "MARCH 2006" "Version 0.3.2"
+.SH NAME
+mesh2hmap - convert a 3D mesh to a heightmap
+.\" --------------------------------------------------
+.\" SYNOPISIS
+.\" --------------------------------------------------
+.SH SYNOPSIS
+.B mesh2hmap
+.RI [ options ]
+.I MESH_FILE
+.RI [ HEIGHTMAP_FILE ]
+.\" --------------------------------------------------
+.\" DESCRIPTION
+.\" --------------------------------------------------
+.SH DESCRIPTION
+.B mesh2hmap 
+is a simple command line tool for converting 3D meshes to raster
+heightmaps. This tool allows you to create terrains in your favourite
+3D modeller and then easily convert to a heightmap.
+.PP
+Currently mesh2hmap reads only VRML meshes (1 and 2) and outputs a
+portable grey map (PGM) or portable pixel map (PPM). A PPM is output 
+only when a colour gradient heightmap has been specified. 
+.PP
+Here's a quick example that shows how to generate a heightmap from the
+included `monkey.wrl' file.
+.TP
+.B mesh2hmap --normal=+z --m-pix=0.01 monkey.wrl front.pgm
+.\" --------------------------------------------------
+.\" OPTIONS
+.\" --------------------------------------------------
+.SH OPTIONS
+.IP --normal=[+-][xyz]
+Sets which axis is normal to the plane of the heightmap, i.e. the
+projection axis. Default `+z'.
+.IP --m-pix=#
+Grid resolution in `metres per pixel'. Floating point number. If this
+is set, it will overide `x-m-pix' and `y-m-pix'. Default `1'.
+.IP --x-m-pix=#
+Horizontal grid resolution. Default `1'.
+.IP --y-m-pix=#
+Vertical grid resolution. Default `1'.
+.IP --size=AxB
+Set size of output heightmap explicitly. `A' is width and `B' is
+height. This option overrides any `m-pix' options.
+.IP --width=A
+Set image width explicitly. Overrides any `x-m-pix' options, but
+leaves `y-m-pix' unchanged.
+.IP --height=B
+Set image height explicitly. Overrides any `y-m-pix' options.
+.IP --bpp=#
+Bits Per Pixel. Sets the pixel depth of the PGM output. Default `8'`.
+.IP --min=#
+Pixel value (or colour) of the lowest point on the heightmap. Default `0'.
+.IP --max=#
+Pixel value (or colour) of the highest point on the heightmap. 
+Default `2^bpp - 1'.
+.IP --bg=#
+Value to set background to. Non-rectangular meshes (such as the provided
+`monkey.wrl') have a background. This option allows you to set the value
+(or colour) of the background. In addition, you can also set this option
+to "max" or "min" which will set the background equal to the maximum or
+minimum value (or colour) in the heightmap. Default is `0'
+.IP --print
+Parse the mesh and print it to standard output in the `native' mesh
+format, then exit. Useful for verifying that the mesh is being parsed 
+correctly.
+.IP --raw
+Output a raw heightmap - an array of floating point numbers
+.IP --vrml
+Parse the input file as a VRML (Default).
+.IP --native
+Parse the input file using the `native' mesh parser. Use this if you
+are having problems parsing your VRML. Manually (or write a script to)
+copy the vertices and vertex indeces into a separate file. The native 
+file format is the same as that printed by the --print switch, type
+`mesh2hmap --print monkey.wrl' to see the format.
+.IP --version
+Print version number and exit.
+.\" --------------------------------------------------
+.\" EXAMPLES
+.\" --------------------------------------------------
+.SH COLOUR GRADIENT HEIGHTMAPS
+The default behaviour is to make a greyscale heightmap that blends from 
+black (minimum height) to white (maximum height). A colour gradient 
+heightmap allows you to blend from one colour to another, for example 
+blue to red. In addition you can also set the colour of the background.
+Colours are specified with the `max', `min', and `bg' command line 
+options. Setting any of these to a colour will produce a colour heightmap.
+.PP
+The colour format is 3 numbers separated by whitespace representing Red, 
+Green, and Blue, respectively. For example to set the maximum height colour
+to red (Note that the RGB string must be enclosed in quotes):
+.TP
+.B --max="255 0 0"
+.PP
+In addition, the following words are also recognised as colours: 
+.B black, white, red, green, blue, cyan, magenta, yellow. 
+The following is an example that sets minimum heights to blue, maximums 
+to red, and the background to white:
+.TP
+.B mesh2hmap --m-pix=0.01 --min=blue --max=red --bg=white monkey.wrl colour.ppm
+.\" --------------------------------------------------
+.\" EXAMPLES
+.\" --------------------------------------------------
+.SH EXAMPLES
+Try the options with the VRML provided. The VRML is of the monkey that
+is built into Blender.
+.PP
+.TP
+.B Front:
+mesh2hmap --normal=+z --m-pix=0.01 monkey.wrl front.pgm
+.TP
+.B Back:
+mesh2hmap --normal=-z --m-pix=0.01 monkey.wrl back.pgm
+.TP
+.B Left:
+mesh2hmap --normal=-x --m-pix=0.01 monkey.wrl left.pgm
+.TP
+.B Right:
+mesh2hmap --normal=+x --m-pix=0.01 monkey.wrl right.pgm
+.TP
+.B Top:
+mesh2hmap --normal=+y --m-pix=0.01 monkey.wrl top.pgm
+.TP
+.B Bottom:
+mesh2hmap --normal=-y --m-pix=0.01 monkey.wrl bottom.pgm
+.PP
+If you are creating heightmaps for `Legends' or any other game using
+the `Torque Gaming Engine', the grid resolution is 256 inches per
+pixel. As their are 0.0254 meters per inch, you want to use
+256*0.0254 or 6.5024 meters per pixel as your grid resolution.
+.PP
+.B mesh2hmap --m-pix=6.5024 myterrain.wrl myterrain.pgm
+.PP
+Convert the PGM to PNG and put it in your `legends' directory.
+.PP
+.B pnmtopng myterrain.pgm > myterrain.png
+.br
+.B mv myterrain.png ~/.legends/common/edit/mapEditor/heightscripts/
+.\" --------------------------------------------------
+.\" GENERAL
+.\" --------------------------------------------------
+.SH GENERAL
+If you are generating a large heightmap (i.e. greater than 100x100),
+use a smaller grid resolution (with --m-pix) until you have the
+correct `normal', then use the desired grid resolution.
+.PP
+You are limited to heightmaps with less than 10*1024*1024
+elements. This is approximately 3200x3200 pixels and would
+create an image that would be over 40Mb. It would be very close to
+40Mb if the program wrote binary PGMs, expect 2-4 times that size for
+plain text PGMs.
+.\" --------------------------------------------------
+.\" REPORTING BUGS
+.\" --------------------------------------------------
+.SH REPORTING BUGS
+Report bugs in the bug tracker at the Sourceforge page:
+http://www.sourceforge.net/projects/mesh2hmap
+.\" --------------------------------------------------
+.\" AUTHORS
+.\" --------------------------------------------------
+.SH AUTHORS
+Tim Hessint. Contact via the Sourceforge page.
+.\" --------------------------------------------------
+.\" THANKS
+.\" --------------------------------------------------
+.SH THANKS
+See `AUTHORS' for a complete list of contributors.
+.PP
+The monkey.wrl file is the monkey mesh that comes with Blender3D
+(www.blender3d.org). I have included it for testing and examples.
+

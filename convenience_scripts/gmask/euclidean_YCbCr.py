@@ -10,7 +10,7 @@ directory = os.getcwd()
 def main():
 
     if len(sys.argv) < 1:
-        print('correct format is: python process.py sensitivity red green blue')
+        print('correct format is: python euclidean_YCbCr.py sensitivity red green blue')
         main()
     else:
         for filename in os.listdir(directory):

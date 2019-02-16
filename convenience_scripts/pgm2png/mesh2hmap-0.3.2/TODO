@@ -1,0 +1,36 @@
+In vague order of importance,
+
+
+* Improve colour interface. Use a '--range=' switch so you can set
+  min and max in one option. Also allow several colours to be
+  specified so you can make colour maps that go from blue to green
+  to yellow to orange to red.
+
+* Can't handle VRMLs that use 'ElevationGrid'. Should at least fail
+  gracefully when this happens.
+
+* Occasionally grid points on polygon edges seem to fail the test to 
+  determine if they are inside the polygon
+
+* Be able to specify arbitrary normal - i.e. --normal=[0.414 -0.414 0]
+  instead of just --normal=[+-][xyz]. This will require applying a 
+  rotation matrix to all the vertices, but should be straight-forward
+
+* Use 'getopt' for command line parsing
+
+* Make windows binary. Test on other platforms
+
+* Output more image formats. Currently outputs ascii PGM, would like 
+  to add binary pgm and PNG
+
+* Fix memory leaks. According to 'valgrind', the matrix resizing 
+  functions are introducing memory leaks. I'm not sure how bad these 
+  leaks are and have tried to block them but without success.
+
+* Add functionality for rotating and flipping the PGM output. Not
+  really necessary as the NetPBM utilities and any image manipulation
+  program can easily do this, but it would be nice and it's wasy to do.
+
+* Allow parsing for more mesh types. Preferably by linking to 3rd 
+  party parsers.
+
